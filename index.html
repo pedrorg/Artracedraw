@@ -3,232 +3,181 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Privacy Policy – AR Trace Draw</title>
-  <meta name="description" content="Privacy Policy of the Android app AR Trace Draw – Camera Sketch." />
+  <title>AR Trace Draw – Camera Sketch</title>
+  <meta name="description" content="Trace any image with your camera. Overlay a reference, adjust opacity and sketch on paper. Free Android app." />
+  <link rel="icon" href="icon.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --violet: #7c3aed;
+      --violet-light: #a78bfa;
+      --pink: #ec4899;
+      --bg: #0f0f17;
+      --card: #16162a;
+      --border: #2a2a4a;
+      --text: #e2e2f0;
+      --muted: #9a9ab8;
+    }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #ffffff;
-      color: #1f1f2e;
-      line-height: 1.65;
-      padding: 0 16px 64px;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
-    main { max-width: 760px; margin: 0 auto; }
-    h1 { font-size: 1.8rem; margin: 40px 0 4px; }
-    h2 { font-size: 1.2rem; margin: 32px 0 8px; color: #5b21b6; }
-    h3 { font-size: 1rem; margin: 20px 0 6px; }
-    p, li { font-size: 0.95rem; }
-    ul { padding-left: 22px; }
-    li { margin-bottom: 4px; }
-    a { color: #6d28d9; }
-    .meta { color: #555; font-size: 0.9rem; }
-    nav { margin: 16px 0 8px; font-size: 0.95rem; }
-    hr { border: 0; border-top: 1px solid #ddd; margin: 48px 0; }
-    table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin: 8px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
-    th { background: #f4f1fb; }
-    footer { max-width: 760px; margin: 40px auto 0; font-size: 0.85rem; color: #666; }
+    a { color: var(--violet-light); }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+    /* top bar */
+    .top { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); text-decoration: none; }
+    .brand img { width: 36px; height: 36px; border-radius: 9px; }
+    .lang { display: flex; gap: 6px; }
+    .lang button {
+      background: transparent; border: 1px solid var(--border); color: var(--muted);
+      border-radius: 999px; padding: 4px 12px; font-size: 0.85rem; cursor: pointer;
+    }
+    .lang button[aria-pressed="true"] { border-color: var(--violet); color: var(--violet-light); background: rgba(124,58,237,.18); }
+
+    /* hero */
+    .hero { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding: 48px 0 56px; }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.1; margin: 0 0 16px; font-weight: 900;
+      background: linear-gradient(90deg, var(--violet-light), var(--pink));
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 1.1rem; color: #c4c4d8; margin: 0 0 28px; max-width: 520px; }
+    .hero img.big { width: 220px; height: 220px; border-radius: 48px; box-shadow: 0 20px 60px rgba(124,58,237,.35); }
+    .cta {
+      display: inline-block; padding: 14px 26px; border-radius: 999px; font-weight: 800; text-decoration: none;
+      color: #fff; background: linear-gradient(90deg, var(--violet), var(--pink));
+    }
+    .cta:hover { filter: brightness(1.1); }
+    .note { display: block; margin-top: 12px; font-size: 0.85rem; color: var(--muted); }
+
+    h2 { font-size: 1.4rem; margin: 0 0 20px; }
+    section.block { padding: 32px 0; }
+
+    .steps, .features { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+    .card h3 { margin: 0 0 6px; font-size: 1rem; }
+    .card p { margin: 0; color: #c4c4d8; font-size: 0.92rem; }
+    .num {
+      display: inline-flex; width: 28px; height: 28px; border-radius: 50%; align-items: center; justify-content: center;
+      background: rgba(124,58,237,.25); color: var(--violet-light); font-weight: 800; font-size: .9rem; margin-bottom: 10px;
+    }
+    .pro { border-color: rgba(236,72,153,.45); }
+    .tag { font-size: .72rem; font-weight: 800; color: var(--pink); letter-spacing: .05em; }
+
+    footer { border-top: 1px solid var(--border); margin-top: 40px; padding: 24px 0 40px; color: var(--muted); font-size: 0.88rem; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-bottom: 8px; }
+
+    [data-lang="es"] { display: none; }
+    html[lang="es"] [data-lang="en"] { display: none; }
+    html[lang="es"] [data-lang="es"] { display: revert; }
+
+    @media (max-width: 640px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding-top: 24px; }
+      .hero img.big { width: 140px; height: 140px; border-radius: 32px; margin: 0 auto; grid-row: 1; }
+      .hero p { margin-left: auto; margin-right: auto; }
+    }
   </style>
 </head>
 <body>
-<main>
+<div class="wrap">
 
-  <nav><a href="#en">English</a> · <a href="#es">Español</a></nav>
+  <div class="top">
+    <a class="brand" href="./"><img src="icon.png" alt="" />AR Trace Draw</a>
+    <div class="lang">
+      <button type="button" data-set="en" aria-pressed="true">EN</button>
+      <button type="button" data-set="es" aria-pressed="false">ES</button>
+    </div>
+  </div>
 
-  <!-- ═══════════════════ ENGLISH ═══════════════════ -->
-  <section id="en" lang="en">
-    <h1>Privacy Policy</h1>
-    <p class="meta">App: <strong>AR Trace Draw – Camera Sketch</strong> (Android)<br />
-      Developer: <strong>Pedro Rodríguez</strong><br />
-      Contact: <a href="mailto:pedrorgarrido@gmail.com">pedrorgarrido@gmail.com</a><br />
-      Effective date / last updated: <strong>18 November 2026</strong></p>
+  <header class="hero">
+    <div>
+      <h1 data-lang="en">Trace any image with your camera</h1>
+      <h1 data-lang="es">Calca cualquier imagen con tu cámara</h1>
+      <p data-lang="en">Put a reference image over your camera's live view, adjust the opacity and trace it onto paper. Free, with no subscription.</p>
+      <p data-lang="es">Superpón una imagen de referencia sobre la cámara en directo, ajusta la opacidad y cálcala en papel. Gratis y sin suscripción.</p>
+      <a class="cta" href="https://play.google.com/store/apps/details?id=com.artracedraw.app">
+        <span data-lang="en">Get it on Google Play</span><span data-lang="es">Disponible en Google Play</span>
+      </a>
+      <span class="note" data-lang="en">Android · Free with ads · Optional one-time PRO purchase</span>
+      <span class="note" data-lang="es">Android · Gratis con anuncios · PRO opcional con pago único</span>
+    </div>
+    <img class="big" src="icon.png" alt="AR Trace Draw app icon" />
+  </header>
 
-    <p>This Privacy Policy explains what information the app <strong>AR Trace Draw – Camera Sketch</strong>
-      (the "App"), published on Google Play by Pedro Rodríguez ("we", "us"), accesses, collects, uses and shares,
-      and the choices you have. By using the App you agree to this policy.</p>
-
-    <h2>1. Summary</h2>
-    <ul>
-      <li>We (the developer) do not run any server and do not receive your photos, drawings, name, email or any account data.</li>
-      <li>Camera images and gallery images are processed <strong>only on your device</strong>.</li>
-      <li>Free users see ads from <strong>Google AdMob</strong>. AdMob, a third party, collects some device data (described below) to serve ads.</li>
-      <li>Purchases are processed by <strong>Google Play</strong>.</li>
-    </ul>
-
-    <h2>2. Data accessed on your device (not collected by us)</h2>
-    <table>
-      <tr><th>Data / permission</th><th>Why it is used</th><th>Is it sent anywhere?</th></tr>
-      <tr><td>Camera (CAMERA)</td><td>To show a live preview so you can trace a drawing over it.</td><td>No. Images are not recorded, stored or transmitted.</td></tr>
-      <tr><td>Photos / storage (READ/WRITE_EXTERNAL_STORAGE, photo picker)</td><td>To import an image you choose as a tracing reference, and to save an image to your gallery when you ask to.</td><td>No. Files stay on your device. If you use "Share", the image is sent only to the app you choose.</td></tr>
-      <tr><td>Local settings (SharedPreferences)</td><td>To remember your preferences and whether you unlocked the premium version.</td><td>No. Stored only on your device.</td></tr>
-    </table>
-
-    <h2>3. Data collected and shared by third parties</h2>
-    <h3>3.1 Google AdMob (advertising)</h3>
-    <p>For users of the free version, the App uses the Google Mobile Ads SDK (AdMob) to display ads. The SDK may automatically collect and share with Google:</p>
-    <ul>
-      <li>Device identifiers, such as the Android Advertising ID and app set ID;</li>
-      <li>IP address and the approximate location derived from it;</li>
-      <li>Device and app information (model, OS version, language, app version);</li>
-      <li>Ad interaction data (ads shown, taps) and diagnostic/performance data of the ads SDK.</li>
-    </ul>
-    <p>This data is used for advertising, analytics of ad delivery, and fraud prevention. Data is encrypted in transit.
-      See how Google uses data: <a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>
-      and Google's Privacy Policy: <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>.</p>
-    <p><strong>Consent (EEA, UK and Switzerland):</strong> the App uses Google's User Messaging Platform (UMP), a Google-certified consent
-      management platform, to ask for your consent before personalized ads are shown. You can change or withdraw your choice at any time with the
-      <em>Privacy settings</em> button on the App's home screen.</p>
-    <p><strong>Opting out of personalized ads:</strong> you can also reset or delete your Advertising ID in your device's
-      <em>Settings → Privacy → Ads</em> (or <em>Settings → Google → Ads</em>).</p>
-    <p>Users who buy the premium version do not see ads, and the ads SDK is not used to show them ads.</p>
-
-    <h3>3.2 Google Play Billing (in-app purchases)</h3>
-    <p>Purchases are processed by Google Play under the
-      <a href="https://payments.google.com/legaldocument?family=0.privacynotice">Google Payments Privacy Notice</a>.
-      We never receive your payment details. The App only receives confirmation that the purchase is valid.</p>
-
-    <h3>3.3 Google Fonts</h3>
-    <p>The App may download fonts from Google Fonts servers the first time they are needed. This request reveals your IP address to Google.
-      No other personal data is sent.</p>
-
-    <h3>3.4 Google Play in-app review</h3>
-    <p>If you choose to rate the App from inside it, the review is handled by Google Play under your Google account. We do not receive your identity from that flow.</p>
-
-    <h2>4. Data we (the developer) collect</h2>
-    <p>We do not collect, store or have access to any personal data through the App. We do not sell personal data. If you email us, we will use your
-      email address and message only to reply to you.</p>
-
-    <h2>5. Data security</h2>
-    <p>The App does not send your images or content off your device. Data collected by the third-party SDKs above is transmitted over encrypted (HTTPS/TLS)
-      connections and handled under Google's security practices.</p>
-
-    <h2>6. Data retention and deletion</h2>
-    <ul>
-      <li>Data stored on your device (settings, premium flag, saved images) stays there until you delete it. You can delete it by clearing the App's data,
-        uninstalling the App, or deleting the images from your gallery.</li>
-      <li>Data collected by AdMob and Google Play is kept by Google according to its own retention policies
-        (<a href="https://policies.google.com/technologies/retention">policies.google.com/technologies/retention</a>).
-        You can manage it in your Google account at <a href="https://myaccount.google.com/">myaccount.google.com</a>.</li>
-      <li>Emails you send us are deleted on request. To request this, write to the contact address above.</li>
-    </ul>
-
-    <h2>7. Your rights</h2>
-    <p>Depending on where you live (e.g. GDPR in the EU/EEA/UK, CCPA in California), you may have the right to access, correct, delete or object to the
-      processing of your personal data and to withdraw consent. Because we do not hold personal data from the App, most requests are best handled
-      through the in-app <em>Privacy settings</em> and your Google account. You can contact us with any request. You also have the right to lodge a
-      complaint with your local data protection authority.</p>
-
-    <h2>8. Children</h2>
-    <p>The App is not directed at children under 13, and we do not knowingly collect personal information from children. If you believe a child has provided
-      personal information, contact us and we will help remove it.</p>
-
-    <h2>9. Changes to this policy</h2>
-    <p>We may update this policy. Changes will be posted on this page and the "last updated" date will change.</p>
-
-    <h2>10. Contact</h2>
-    <p>Pedro Rodríguez – <a href="mailto:pedrorgarrido@gmail.com">pedrorgarrido@gmail.com</a></p>
+  <section class="block">
+    <h2 data-lang="en">How it works</h2>
+    <h2 data-lang="es">Cómo funciona</h2>
+    <div class="steps">
+      <div class="card"><span class="num">1</span>
+        <h3 data-lang="en">Point at your paper</h3><h3 data-lang="es">Apunta al papel</h3>
+        <p data-lang="en">Hold your phone over your sketchbook or paper.</p><p data-lang="es">Coloca el móvil sobre tu cuaderno o papel.</p></div>
+      <div class="card"><span class="num">2</span>
+        <h3 data-lang="en">Import a reference</h3><h3 data-lang="es">Importa una referencia</h3>
+        <p data-lang="en">Pick any image from your gallery.</p><p data-lang="es">Elige cualquier imagen de tu galería.</p></div>
+      <div class="card"><span class="num">3</span>
+        <h3 data-lang="en">Adjust it</h3><h3 data-lang="es">Ajústala</h3>
+        <p data-lang="en">Move, scale and rotate it, and set the opacity.</p><p data-lang="es">Muévela, escálala, gírala y ajusta la opacidad.</p></div>
+      <div class="card"><span class="num">4</span>
+        <h3 data-lang="en">Trace</h3><h3 data-lang="es">Calca</h3>
+        <p data-lang="en">Draw at your own pace, following the lines on screen.</p><p data-lang="es">Dibuja a tu ritmo siguiendo las líneas de la pantalla.</p></div>
+    </div>
   </section>
 
-  <hr />
-
-  <!-- ═══════════════════ ESPAÑOL ═══════════════════ -->
-  <section id="es" lang="es">
-    <h1>Política de Privacidad</h1>
-    <p class="meta">App: <strong>AR Trace Draw – Camera Sketch</strong> (Android)<br />
-      Desarrollador: <strong>Pedro Rodríguez</strong><br />
-      Contacto: <a href="mailto:pedrorgarrido@gmail.com">pedrorgarrido@gmail.com</a><br />
-      Fecha de entrada en vigor / última actualización: <strong>18 de noviembre de 2026</strong></p>
-
-    <p>Esta Política de Privacidad explica qué información accede, recopila, usa y comparte la app <strong>AR Trace Draw – Camera Sketch</strong>
-      (la "App"), publicada en Google Play por Pedro Rodríguez ("nosotros"), y qué opciones tienes. Al usar la App aceptas esta política.</p>
-
-    <h2>1. Resumen</h2>
-    <ul>
-      <li>Nosotros (el desarrollador) no tenemos ningún servidor y no recibimos tus fotos, dibujos, nombre, email ni datos de cuenta.</li>
-      <li>Las imágenes de la cámara y de la galería se procesan <strong>solo en tu dispositivo</strong>.</li>
-      <li>Los usuarios gratuitos ven anuncios de <strong>Google AdMob</strong>. AdMob, un tercero, recopila algunos datos del dispositivo para mostrar anuncios (ver abajo).</li>
-      <li>Las compras las procesa <strong>Google Play</strong>.</li>
-    </ul>
-
-    <h2>2. Datos a los que se accede en tu dispositivo (no los recopilamos)</h2>
-    <table>
-      <tr><th>Dato / permiso</th><th>Para qué se usa</th><th>¿Se envía a algún sitio?</th></tr>
-      <tr><td>Cámara (CAMERA)</td><td>Mostrar una vista previa en directo para calcar un dibujo sobre ella.</td><td>No. No se graban, guardan ni transmiten imágenes.</td></tr>
-      <tr><td>Fotos / almacenamiento (READ/WRITE_EXTERNAL_STORAGE, selector de fotos)</td><td>Importar la imagen que elijas como referencia y guardar una imagen en tu galería cuando lo pidas.</td><td>No. Los archivos se quedan en tu dispositivo. Si usas "Compartir", la imagen se envía solo a la app que elijas.</td></tr>
-      <tr><td>Ajustes locales (SharedPreferences)</td><td>Recordar tus preferencias y si has desbloqueado la versión premium.</td><td>No. Se guardan solo en tu dispositivo.</td></tr>
-    </table>
-
-    <h2>3. Datos recopilados y compartidos por terceros</h2>
-    <h3>3.1 Google AdMob (publicidad)</h3>
-    <p>En la versión gratuita, la App usa el SDK de Google Mobile Ads (AdMob) para mostrar anuncios. El SDK puede recopilar automáticamente y compartir con Google:</p>
-    <ul>
-      <li>Identificadores del dispositivo, como el ID de publicidad de Android y el app set ID;</li>
-      <li>Dirección IP y la ubicación aproximada que se deduce de ella;</li>
-      <li>Información del dispositivo y de la app (modelo, versión del sistema, idioma, versión de la app);</li>
-      <li>Datos de interacción con anuncios (anuncios mostrados, toques) y datos de diagnóstico/rendimiento del SDK.</li>
-    </ul>
-    <p>Estos datos se usan para publicidad, medición de anuncios y prevención del fraude, y se cifran durante la transmisión.
-      Cómo usa Google los datos: <a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>
-      · Política de privacidad de Google: <a href="https://policies.google.com/privacy">policies.google.com/privacy</a>.</p>
-    <p><strong>Consentimiento (EEE, Reino Unido y Suiza):</strong> la App usa la User Messaging Platform (UMP) de Google, una plataforma de gestión de
-      consentimiento certificada por Google, para pedir tu consentimiento antes de mostrar anuncios personalizados. Puedes cambiar o retirar tu
-      elección en cualquier momento con el botón <em>Ajustes de privacidad</em> de la pantalla principal.</p>
-    <p><strong>Desactivar anuncios personalizados:</strong> también puedes restablecer o eliminar tu ID de publicidad en
-      <em>Ajustes → Privacidad → Anuncios</em> (o <em>Ajustes → Google → Anuncios</em>).</p>
-    <p>Los usuarios con la versión premium no ven anuncios y el SDK de anuncios no se usa para mostrárselos.</p>
-
-    <h3>3.2 Facturación de Google Play (compras integradas)</h3>
-    <p>Las compras las procesa Google Play conforme al
-      <a href="https://payments.google.com/legaldocument?family=0.privacynotice">Aviso de Privacidad de Google Payments</a>.
-      Nunca recibimos tus datos de pago. La App solo recibe la confirmación de que la compra es válida.</p>
-
-    <h3>3.3 Google Fonts</h3>
-    <p>La App puede descargar tipografías de los servidores de Google Fonts la primera vez que las necesita. Esa petición revela tu dirección IP a Google.
-      No se envía ningún otro dato personal.</p>
-
-    <h3>3.4 Valoración en Google Play</h3>
-    <p>Si decides valorar la App desde dentro, la valoración la gestiona Google Play con tu cuenta de Google. Ese proceso no nos da tu identidad.</p>
-
-    <h2>4. Datos que recopilamos nosotros (el desarrollador)</h2>
-    <p>No recopilamos, almacenamos ni tenemos acceso a ningún dato personal a través de la App. No vendemos datos personales. Si nos escribes un email,
-      usaremos tu dirección y tu mensaje solo para responderte.</p>
-
-    <h2>5. Seguridad de los datos</h2>
-    <p>La App no envía tus imágenes ni tu contenido fuera del dispositivo. Los datos que recopilan los SDK de terceros indicados arriba se transmiten
-      mediante conexiones cifradas (HTTPS/TLS) y se gestionan según las prácticas de seguridad de Google.</p>
-
-    <h2>6. Conservación y eliminación de datos</h2>
-    <ul>
-      <li>Los datos guardados en tu dispositivo (ajustes, indicador premium, imágenes guardadas) permanecen ahí hasta que los borres. Puedes borrarlos
-        borrando los datos de la App, desinstalándola o eliminando las imágenes de tu galería.</li>
-      <li>Google conserva los datos que recopilan AdMob y Google Play según sus propias políticas de conservación
-        (<a href="https://policies.google.com/technologies/retention">policies.google.com/technologies/retention</a>).
-        Puedes gestionarlos desde tu cuenta de Google en <a href="https://myaccount.google.com/">myaccount.google.com</a>.</li>
-      <li>Los emails que nos envíes se eliminan si lo solicitas. Para ello, escribe a la dirección de contacto indicada arriba.</li>
-    </ul>
-
-    <h2>7. Tus derechos</h2>
-    <p>Según dónde vivas (p. ej. RGPD en la UE/EEE/Reino Unido, CCPA en California), puedes tener derecho a acceder, rectificar, suprimir u oponerte al
-      tratamiento de tus datos personales y a retirar tu consentimiento. Como no conservamos datos personales de la App, la mayoría de solicitudes se
-      gestionan mejor desde los <em>Ajustes de privacidad</em> de la App y tu cuenta de Google. Puedes contactarnos para cualquier solicitud. También
-      tienes derecho a presentar una reclamación ante tu autoridad de protección de datos (en España, la AEPD).</p>
-
-    <h2>8. Menores</h2>
-    <p>La App no está dirigida a menores de 13 años y no recopilamos conscientemente información personal de menores. Si crees que un menor nos ha
-      proporcionado información personal, contáctanos y te ayudaremos a eliminarla.</p>
-
-    <h2>9. Cambios en esta política</h2>
-    <p>Podemos actualizar esta política. Los cambios se publicarán en esta página y cambiará la fecha de "última actualización".</p>
-
-    <h2>10. Contacto</h2>
-    <p>Pedro Rodríguez – <a href="mailto:pedrorgarrido@gmail.com">pedrorgarrido@gmail.com</a></p>
+  <section class="block">
+    <h2 data-lang="en">Features</h2>
+    <h2 data-lang="es">Funciones</h2>
+    <div class="features">
+      <div class="card">
+        <h3 data-lang="en">Free</h3><h3 data-lang="es">Gratis</h3>
+        <p data-lang="en">Live camera view, image import, opacity from 0 to 100%, gestures, overlay lock and flashlight.</p>
+        <p data-lang="es">Cámara en directo, importar imágenes, opacidad de 0 a 100%, gestos, bloqueo de la referencia y linterna.</p>
+      </div>
+      <div class="card pro"><span class="tag">PRO</span>
+        <h3 data-lang="en">One-time purchase</h3><h3 data-lang="es">Pago único</h3>
+        <p data-lang="en">No ads, save to gallery, mirror flip, color tint, outline filter and up to 3 layers.</p>
+        <p data-lang="es">Sin anuncios, guardar en galería, voltear la imagen, tinte de color, filtro de contornos y hasta 3 capas.</p>
+      </div>
+      <div class="card">
+        <h3 data-lang="en">Private</h3><h3 data-lang="es">Privada</h3>
+        <p data-lang="en">Your images stay on your device. No account needed.</p>
+        <p data-lang="es">Tus imágenes se quedan en tu dispositivo. Sin registro.</p>
+      </div>
+    </div>
   </section>
 
-</main>
-<footer>
-  <p>© 2026 Pedro Rodríguez – AR Trace Draw – Camera Sketch · <a href="terms.html">Terms of Service / Términos del Servicio</a></p>
-</footer>
+  <footer>
+    <nav>
+      <a href="privacy.html"><span data-lang="en">Privacy Policy</span><span data-lang="es">Política de Privacidad</span></a>
+      <a href="terms.html"><span data-lang="en">Terms of Service</span><span data-lang="es">Términos del Servicio</span></a>
+      <a href="mailto:pedrorgarrido@gmail.com"><span data-lang="en">Contact</span><span data-lang="es">Contacto</span></a>
+    </nav>
+    <p>© 2026 Pedro Rodríguez – AR Trace Draw – Camera Sketch</p>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang button').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.set === lang ? 'true' : 'false');
+      });
+      try { localStorage.setItem('lang', lang); } catch (e) {}
+    }
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.dataset.set); });
+    });
+    var saved = null;
+    try { saved = localStorage.getItem('lang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    setLang(lang);
+  })();
+</script>
 </body>
 </html>
